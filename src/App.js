@@ -6,13 +6,16 @@ const initialState = {
   id: 0,
 };
 
+const TESTE = "teste";
+
 const reducer = (state = initialState, action) => {
-  if (action.type === "teste") {
+  if (action.type === TESTE) {
     return {
       ...state,
       teste: action.payload,
     };
   }
+
   return state;
 };
 
@@ -20,9 +23,9 @@ const store = configureStore({
   reducer: reducer,
 });
 
-store.dispatch({ type: "teste", payload: "Olá redux" });
+store.dispatch({ type: TESTE, payload: "Olá redux" });
 
-console.log(store.getState())
+console.log(store.getState());
 
 function App() {
   return <div className="App"></div>;
