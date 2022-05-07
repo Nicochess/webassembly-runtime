@@ -1,5 +1,5 @@
 import "./App.css";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 const initialState = {
   name: "Nicolas",
@@ -8,16 +8,28 @@ const initialState = {
 
 const TESTE = "teste";
 
-const reducer = (state = initialState, action) => {
+const teste = (state = initialState, action) => {
   if (action.type === TESTE) {
     return {
       ...state,
       teste: action.payload,
     };
   }
-
-  return state;
 };
+
+const contador = (state = initialState, action) => {
+  switch (action.type) {
+    case "INCREMENTAR":
+      return {
+        ...state,
+        tot: state.tot + 1,
+      };
+    default:
+      break;
+  }
+};
+
+const reducer = combineReducers({ contador, teste });
 
 const store = configureStore({
   reducer: reducer,
