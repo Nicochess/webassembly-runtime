@@ -10,20 +10,14 @@ const TESTE = "teste";
 
 const teste = (state = initialState, action) => {
   if (action.type === TESTE) {
-    return {
-      ...state,
-      teste: action.payload,
-    };
+    return action.payload;
   }
 };
 
 const contador = (state = initialState, action) => {
   switch (action.type) {
     case "INCREMENTAR":
-      return {
-        ...state,
-        tot: state.tot + 1,
-      };
+      return state.tot + 1;
     default:
       break;
   }
