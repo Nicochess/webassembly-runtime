@@ -9,9 +9,10 @@ const initialState = {
 const TESTE = "teste";
 
 const teste = (state = initialState, action) => {
-  if (action.type === TESTE) {
-    return action.payload;
-  }
+  return {
+    ...state,
+    teste: action.payload,
+  };
 };
 
 const contador = (state = initialState, action) => {
