@@ -1,80 +1,62 @@
 import React, { useState } from "react";
 import wasmApi from "./wasm-api";
+import { Button, Grid, TextField } from "@mui/material";
+import Chart from "./components/Chart";
+import { countPrimes } from "./Prime";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-import { Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Chart.js Bar Chart",
-    },
-  },
-};
-
-const labels = ["Performance"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "JavaScript",
-      data: [20],
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "WebAssembly",
-      data: [10],
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
 
 const App = () => {
-  const [res, setRes] = useState(null);
+  const [jsTime, setJsTime] = useState(null);
+  const [wasmTime, setWasmTime] = useState(null);
 
-  const addWasm = async (a, b) => {
+  const primeWasm = async (a, b) => {
     const data = await wasmApi;
-    return data.instance.exports.add(a, b);
+    return data.instance.exports.countPrime(a, b);
   };
+
+  const runtimeComparison = () => {
+    const jsStart = performance.now()
+    countPrimes(5, 100000)
+    const jsEnd = performance.now()
+
+    const wasmStart = performance.now()
+    primeWasm(5, 1000000)
+    const wasmEnd = performance.now()
+
+    setJsTime(jsEnd - jsStart)
+    setWasmTime(wasmEnd - wasmStart)
+  }
 
   return (
     <div className="app">
-      <h1>WebAssembly vs JavaScript</h1>
-      <p>Find how many prime numbers there are among the numbers below</p>
+      <header>
+        <h1>WebAssembly vs JavaScript</h1>
+        <p>Find how many prime numbers there are among the numbers below</p>
+      </header>
 
-      <div>
-        <label htmlFor="startNumber">Start Number:</label>
-        <input type="number" name="startNumber" />
-        <label htmlFor="endNumber">End Number:</label>
-        <input type="number" name="endNumber" />
-      </div>
-      <div className="chart">
-        <Bar options={options} data={data} />
-      </div>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item>
+          <TextField
+            id="outlined-basic"
+            label="Start Number"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            id="outlined-basic"
+            label="End Number"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item>
+          <Button variant="contained" onClick={runtimeComparison}>Run</Button>
+        </Grid>
+      </Grid>
+
+      <p>Total Primes: {0}</p>
+
+      <Chart wasmTime={wasmTime} jsTime={jsTime} />
     </div>
   );
 };
