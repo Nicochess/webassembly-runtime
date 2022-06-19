@@ -1,36 +1,54 @@
-import React, { useState } from "react";
-import wasmApi from "./wasm-api";
+import React, { useState, useCallback } from "react";
+import { useWasm } from "./useWasm";
 import { Button, Grid, TextField } from "@mui/material";
 import Chart from "./components/Chart";
-import { countPrimes } from "./Prime";
-
 
 const App = () => {
-  const [jsTime, setJsTime] = useState(null);
+  const [factorial, setFactorial] = useState(0);
   const [wasmTime, setWasmTime] = useState(null);
+  const [prime, setPrime] = useState(0);
+  const [data, setData] = useState({
+    start: null,
+    end: null,
+    factorial: null
+  });
 
-  const primeWasm = async (a, b) => {
-    const data = await wasmApi;
-    return data.instance.exports.countPrime(a, b);
+  const instance = useWasm("wasm-api.wasm");
+
+  const wasmPrimes = async (start, end) => {
+    let timeStart = performance.now();
+    const res = instance.exports.countPrimes(start, end);
+    let timeEnd = performance.now();
+
+    setPrime(res);
+    setWasmTime(timeEnd - timeStart);
   };
 
-  const runtimeComparison = () => {
-    const jsStart = performance.now()
-    countPrimes(5, 100000)
-    const jsEnd = performance.now()
+  const wasmFactorial = (value) => {
+    const res = instance.exports.factorial(value);
+    setFactorial(res);
+  };
 
-    const wasmStart = performance.now()
-    primeWasm(5, 1000000)
-    const wasmEnd = performance.now()
+  const handleChange = useCallback(({ target }) => {
+    setData((prevData) => ({
+      ...prevData,
+      [target.name]: target.value,
+    }));
+  }, [setData]);
 
-    setJsTime(jsEnd - jsStart)
-    setWasmTime(wasmEnd - wasmStart)
-  }
+  const handleSend = ({ target }) => {
+    if (target.name === "factorial") {
+      wasmFactorial(data.factorial);
+      return;
+    }
+
+    wasmPrimes(data.start, data.end);
+  };
 
   return (
     <div className="app">
       <header>
-        <h1>WebAssembly vs JavaScript</h1>
+        <h1>You are running WebAssembly!</h1>
         <p>Find how many prime numbers there are among the numbers below</p>
       </header>
 
@@ -40,6 +58,8 @@ const App = () => {
             id="outlined-basic"
             label="Start Number"
             variant="outlined"
+            name="start"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item>
@@ -47,16 +67,20 @@ const App = () => {
             id="outlined-basic"
             label="End Number"
             variant="outlined"
+            name="end"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item>
-          <Button variant="contained" onClick={runtimeComparison}>Run</Button>
+          <Button variant="contained" onClick={handleSend}>
+            Run
+          </Button>
         </Grid>
       </Grid>
 
-      <p>Total Primes: {0}</p>
+      <p>Total Primes: {prime}</p>
 
-      <Chart wasmTime={wasmTime} jsTime={jsTime} />
+      <Chart wasmTime={wasmTime} />
     </div>
   );
 };

@@ -15,7 +15,8 @@ export const {
   multiply,
   divide,
   isPrime,
-  countPrimes
+  countPrimes,
+  factorial
 } = await (async url => instantiate(
   await (async () => {
     try { return await globalThis.WebAssembly.compileStreaming(globalThis.fetch(url)); }

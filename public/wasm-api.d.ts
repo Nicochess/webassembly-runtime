@@ -39,3 +39,9 @@ export declare function isPrime(number: number): boolean;
  * @returns `i32`
  */
 export declare function countPrimes(startNum: number, endNum: number): number;
+/**
+ * assembly/index/factorial
+ * @param value `f64`
+ * @returns `f64`
+ */
+export declare function factorial(value: number): number;

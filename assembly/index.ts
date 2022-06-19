@@ -16,14 +16,14 @@ export function divide(a: i32, b: i32): i32 {
   return a / b;
 }
 
-export function isPrime(number: i32): bool{
-  if ( number <= 1)  {
+export function isPrime(number: i32): bool {
+  if (number <= 1) {
     return false;
   }
 
-  for (let i = 2; i <= number / 2; i++){
-     if (number % i == 0) { 
-      return false; 
+  for (let i = 2; i <= number / 2; i++) {
+    if (number % i == 0) {
+      return false;
     }
   }
   return true;
@@ -31,11 +31,16 @@ export function isPrime(number: i32): bool{
 
 export function countPrimes(startNum: i32, endNum: i32): i32 {
   let count = 0;
-  for (let i = startNum; i<=endNum; i++) {
-     if(isPrime(i) == 1 ) {
-       count++; 
-      }
+  for (let i = startNum; i <= endNum; i++) {
+    if (isPrime(i) == 1) {
+      count++;
+    }
   }
-  
+
   return count;
+}
+
+export function factorial(value: f64): f64 {
+  if (value == 0 || value == 1) return 1;
+  return value * factorial(value - 1);
 }

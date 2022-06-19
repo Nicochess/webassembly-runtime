@@ -1,6 +1,7 @@
 (module
  (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
  (type $i32_=>_i32 (func (param i32) (result i32)))
+ (type $f64_=>_f64 (func (param f64) (result f64)))
  (memory $0 0)
  (export "add" (func $assembly/index/add))
  (export "subtract" (func $assembly/index/subtract))
@@ -8,6 +9,7 @@
  (export "divide" (func $assembly/index/divide))
  (export "isPrime" (func $assembly/index/isPrime))
  (export "countPrimes" (func $assembly/index/countPrimes))
+ (export "factorial" (func $assembly/index/factorial))
  (export "memory" (memory $0))
  (func $assembly/index/add (param $0 i32) (param $1 i32) (result i32)
   local.get $0
@@ -117,5 +119,24 @@
    end
   end
   local.get $2
+ )
+ (func $assembly/index/factorial (param $0 f64) (result f64)
+  local.get $0
+  f64.const 1
+  f64.eq
+  local.get $0
+  f64.const 0
+  f64.eq
+  i32.or
+  if
+   f64.const 1
+   return
+  end
+  local.get $0
+  local.get $0
+  f64.const 1
+  f64.sub
+  call $assembly/index/factorial
+  f64.mul
  )
 )

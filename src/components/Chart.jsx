@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({ jsTime, wasmTime }) => {
+const Chart = ({ wasmTime }) => {
   const options = {
     responsive: true,
     plugins: {
@@ -29,26 +29,21 @@ const Chart = ({ jsTime, wasmTime }) => {
       },
       title: {
         display: true,
-        text: "Runtime comparison",
+        text: "Runtime",
       },
     },
   };
 
-  const labels = ["Performance"];
+  const labels = ["Milliseconds"];
 
   const data = {
     labels,
     datasets: [
       {
-        label: "JavaScript",
-        data: [jsTime],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
         label: "WebAssembly",
         data: [wasmTime],
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
+        backgroundColor: "rgba(101, 78, 240, 0.7)",
+      }
     ],
   };
 
