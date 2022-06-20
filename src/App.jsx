@@ -1,16 +1,12 @@
-import React, { useState, useCallback } from "react";
-import { useWasm } from "./useWasm";
-import { Button, Grid, TextField } from "@mui/material";
-import Chart from "./components/Chart";
-import Header from "./components/Header";
+import React, { useState } from "react";
+import { useWasm } from "./hooks/useWasm";
+import Chart from "./layout/Chart";
+import Header from "./layout/Header";
+import InputData from "./layout/InputData";
 
 const App = () => {
   const [wasmTime, setWasmTime] = useState(null);
   const [prime, setPrime] = useState(0);
-  const [data, setData] = useState({
-    start: null,
-    end: null
-  });
 
   const instance = useWasm("wasm-api.wasm");
 
@@ -23,51 +19,14 @@ const App = () => {
     setWasmTime(timeEnd - timeStart);
   };
 
-  const handleChange = useCallback(
-    ({ target }) => {
-      setData((prevData) => ({
-        ...prevData,
-        [target.name]: target.value,
-      }));
-    },
-    [setData]
-  );
-
-  const handleSend = () => {
-    wasmPrimes(data.start, data.end);
-  };
-
   return (
     <div className="app">
       <Header />
 
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item>
-          <TextField
-            id="outlined-basic"
-            label="Start Number"
-            variant="outlined"
-            name="start"
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="outlined-basic"
-            label="End Number"
-            variant="outlined"
-            name="end"
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={handleSend}>
-            Run
-          </Button>
-        </Grid>
-      </Grid>
-
-      <p>Total Primes: {prime}</p>
+      <InputData
+        prime={prime}
+        wasmPrimes={wasmPrimes}
+      />
 
       <Chart wasmTime={wasmTime} />
     </div>
