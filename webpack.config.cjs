@@ -10,6 +10,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+      favicon: "./src/assets/webassembly-icon.png"
     })
   ],
   resolve: {
