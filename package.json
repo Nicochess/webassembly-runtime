@@ -1,25 +1,26 @@
 {
-  "name": "webassembly-calculator",
+  "name": "webassembly-runtime",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "npm run asbuild && webpack-dev-server --hot --open --mode development",
-    "build": "webpack --config webpack.config.cjs --mode production",
+    "build": "asc assembly/index.ts --target build && webpack --config webpack.config.cjs --mode production",
     "asbuild": "asc assembly/index.ts --target release",
+    "deploy": "gh-pages -d build",
     "test": "node tests"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nicochess/webassembly-calculator.git"
+    "url": "git+https://github.com/Nicochess/webassembly-runtime.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Nicochess/webassembly-calculator/issues"
+    "url": "https://github.com/Nicochess/webassembly-runtime/issues"
   },
-  "homepage": "https://github.com/Nicochess/webassembly-calculator#readme",
+  "homepage": "https://nicochess.github.io/webassembly-runtime",
   "dependencies": {
     "@assemblyscript/loader": "^0.20.11",
     "@babel/core": "^7.18.5",
@@ -29,10 +30,10 @@
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.8.4",
     "babel-loader": "^8.2.5",
-    "benchmark": "^2.1.4",
     "chart.js": "^3.8.0",
     "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "node-sass": "^7.0.1",
     "react": "^18.2.0",
