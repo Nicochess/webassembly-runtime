@@ -1,24 +1,19 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Button, Grid, TextField } from "@mui/material";
 
 const InputData = ({ prime, wasmPrimes }) => {
-  const [data, setData] = useState({
-    start: null,
-    end: null,
-  });
+  const startRef = useRef()
+  const endRef = useRef()
 
-  const handleChange = useCallback(
-    ({ target }) => {
-      setData((prevData) => ({
-        ...prevData,
-        [target.name]: target.value,
-      }));
-    },
-    [setData]
-  );
+  const handleChange = useCallback(({ target }) => {
+    setData((prevData) => ({
+      ...prevData,
+      [target.name]: target.value,
+    }));
+  }, []);
 
   const handleSend = () => {
-    wasmPrimes(data.start, data.end);
+    wasmPrimes(startRef.current.value, endRef.current.value);
   };
 
   return (
@@ -29,7 +24,7 @@ const InputData = ({ prime, wasmPrimes }) => {
           label="Start Number"
           variant="outlined"
           name="start"
-          onChange={handleChange}
+          inputRef={startRef}
         />
       </Grid>
       <Grid item>
@@ -38,7 +33,7 @@ const InputData = ({ prime, wasmPrimes }) => {
           label="End Number"
           variant="outlined"
           name="end"
-          onChange={handleChange}
+          inputRef={endRef}
         />
       </Grid>
       <Grid item>
