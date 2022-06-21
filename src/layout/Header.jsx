@@ -1,8 +1,8 @@
 import { Avatar } from "@mui/material";
 import logo from "../assets/webassembly-icon.png"
-import React from "react";
+import React, { memo } from "react";
 
-const Header = () => {
+const HeaderComponent = () => {
   return (
     <header>
       <Avatar
@@ -16,5 +16,7 @@ const Header = () => {
     </header>
   );
 };
+
+const Header = memo(HeaderComponent)
 
 export default Header;
