@@ -30,20 +30,32 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 5px;
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
 }
 
 button {
-    height: 100%;
+    height: 50px;
     color: #fff;
     font-size: 20px;
     padding: 16px;
     cursor: pointer;
 }
 
-.chart {
-    width: 400px;
-}
-
 .result {
     margin: 25px 0 0;
+}
+
+.chart {
+    max-width: 400px;
+}
+
+@media screen and (max-width: 400px) {
+    .container {
+        flex-direction: column !important;
+    }
 }

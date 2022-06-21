@@ -22,7 +22,7 @@ const InputData = ({ prime, wasmPrimes }) => {
   };
 
   return (
-    <Grid container spacing={2} justifyContent="center">
+    <Grid container spacing={2} className="container">
       <Grid item>
         <TextField
           id="outlined-basic"
