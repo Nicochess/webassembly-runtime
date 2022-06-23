@@ -1,16 +1,9 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Button, Grid, TextField } from "@mui/material";
 
 const InputData = ({ prime, wasmPrimes }) => {
   const startRef = useRef()
   const endRef = useRef()
-
-  const handleChange = useCallback(({ target }) => {
-    setData((prevData) => ({
-      ...prevData,
-      [target.name]: target.value,
-    }));
-  }, []);
 
   const handleSend = () => {
     wasmPrimes(startRef.current.value, endRef.current.value);

@@ -8,7 +8,8 @@
     "build": "asc assembly/index.ts --target build && webpack --config webpack.config.cjs --mode production",
     "asbuild": "asc assembly/index.ts --target release",
     "deploy": "gh-pages -d build",
-    "test": "node tests"
+    "test": "node tests",
+    "cy": "npx cypress open"
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,9 @@
     "webpack-dev-server": "^4.9.2"
   },
   "devDependencies": {
-    "assemblyscript": "^0.20.11"
+    "@testing-library/cypress": "^8.0.3",
+    "assemblyscript": "^0.20.11",
+    "cypress": "^10.2.0"
   },
   "type": "module",
   "exports": {
