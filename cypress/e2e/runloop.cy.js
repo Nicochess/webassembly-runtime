@@ -1,3 +1,5 @@
+/// <reference types="Cypress" />
+
 describe('Runs a loop', () => {
   it('user should could run a loop', () => {
     cy.visit('http://localhost:8080/');
